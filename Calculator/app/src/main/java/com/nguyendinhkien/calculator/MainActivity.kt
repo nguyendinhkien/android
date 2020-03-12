@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 
 class MainActivity : AppCompatActivity() {
 
@@ -49,9 +50,32 @@ class MainActivity : AppCompatActivity() {
             result = 0.0
         }
         btn1.setOnClickListener {
-            current.text = "1"
-            temp = 1.0
+            xuLySo('1')
         }
+        btn2.setOnClickListener({
+            xuLySo('2')
+        })
+        btn3.setOnClickListener({
+            xuLySo('3')
+        })
+        btn4.setOnClickListener({
+            xuLySo('4')
+        })
+        btn5.setOnClickListener({
+            xuLySo('5')
+        })
+        btn6.setOnClickListener({
+            xuLySo('6')
+        })
+        btn7.setOnClickListener({
+            xuLySo('7')
+        })
+        btn8.setOnClickListener({
+            xuLySo('8')
+        })
+        btn9.setOnClickListener({
+            xuLySo('9')
+        })
         btnPlus.setOnClickListener{
             if (temp!=0.0) {
                 historyString = history.text.toString()+current.text.toString()+"+"
@@ -85,10 +109,32 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun xuLySo(c: Char) {
+        var n : String = current.text as String
+        n = n+c
+        while (n[0].equals('0')){
+            n = n.substring(1)
+        }
+        var h:String = " "+history.text.toString()
+        if (h[h.length-1]=='+'||h[h.length-1]=='-'||h[h.length-1]=='x'||h[h.length-1]=='/'){
+            current.text = "$c"
+        }
+        else{
+            current.text = "${n}"
+        }
+        temp = temp*10 + "$c".toDouble()
+        Toast.makeText(this,temp.toString(),Toast.LENGTH_SHORT).show()
+    }
+
 
     private fun setNumber(r:Double) {
         history.text = historyString
-        current.text = sum(temp,result).toString()
+        if (r-r.toLong()==0.0) {
+            current.text = r.toLong().toString()
+        }
+        else{
+            current.text = r.toString()
+        }
         result = r
         temp=0.0
     }
@@ -119,4 +165,5 @@ class MainActivity : AppCompatActivity() {
     private fun dif(a:Double,b:Double):Double{
         return a-b;
     }
+
 }
